@@ -18,7 +18,9 @@ public class AwsHandler {
 
 	@NonNull private final ObjectMapper mapper;
 
-	@SqsListener(value = "requests", deletionPolicy = ALWAYS)
+	private final static String SNS_TOPIC = "requests";
+
+	@SqsListener(value = SNS_TOPIC, deletionPolicy = ALWAYS)
 	public void receiveMessage(AwsMessage message) throws ClassNotFoundException, IOException {
 
 		log.info("Received SQS message {}", message);
