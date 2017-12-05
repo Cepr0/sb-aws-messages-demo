@@ -1,4 +1,4 @@
-package com.amberity.awsmessagesdemo;
+package com.amberity.awsmessagesdemo.service;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

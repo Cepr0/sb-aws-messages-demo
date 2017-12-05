@@ -8,31 +8,32 @@ import org.springframework.cloud.aws.messaging.listener.annotation.SqsListener;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
-import static org.springframework.cloud.aws.messaging.listener.SqsMessageDeletionPolicy.ALWAYS;
+import static org.springframework.cloud.aws.messaging.listener.SqsMessageDeletionPolicy.ON_SUCCESS;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class AwsHandler {
+public class SqsHandler {
 
 	@NonNull private final ObjectMapper mapper;
 
-	private final static String SNS_TOPIC = "requests";
+	private final static String SQS_NAME = "requests";
 
-	@SqsListener(value = SNS_TOPIC, deletionPolicy = ALWAYS)
-	public void receiveMessage(AwsMessage message) throws ClassNotFoundException, IOException {
+	@SqsListener(value = SQS_NAME, deletionPolicy = ON_SUCCESS)
+	public void receiveMessage(AwsMessage message) throws ClassNotFoundException, IOException, InterruptedException {
 
-		log.info("Received SQS message {}", message);
+//		log.info("<<<M>>> MESSAGE: {}", message);
 
-		String subject = message.getSubject();
-		String packagePath = getClass().getPackage().getName();
-		String className = packagePath + "." + subject;
+		String className = message.getSubject();
 		Class<?> cls = Class.forName(className);
-
+		
 		String payload = message.getMessage();
 		Object value = mapper.readValue(payload, cls);
-
-		log.info("Payload: {}", value);
+		
+		TimeUnit.MILLISECONDS.sleep(500);
+		
+		log.info("<<<@>>> PAYLOAD: {}", value);
 	}
 }
