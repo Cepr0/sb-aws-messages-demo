@@ -49,7 +49,7 @@ public class Application {
 		factory.setAmazonSqs(amazonSqs);
 //		factory.setAutoStartup(false);
 //		factory.setVisibilityTimeout();    // in sec
-		factory.setMaxNumberOfMessages(1); // 1-10
+		factory.setMaxNumberOfMessages(3); // 1-10
 		factory.setWaitTimeOut(20);        // 1-20 in sec
 		
 		return factory;

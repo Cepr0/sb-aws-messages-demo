@@ -37,11 +37,11 @@ public class Runner implements ApplicationRunner {
 	@SneakyThrows
 	public void sendTask(int taskNum) {
 		TimeUnit.SECONDS.sleep(1 + new Random().nextInt(5));
-		for (int i = 1; i <= 50; ++i) {
+		for (int i = 1; i <= 10; ++i) {
 			TestMessage message = new TestMessage(Thread.currentThread().getName() +" : Task #" + taskNum, i, i + 0.5);
-			send("testEvent", message, "com.amberity.awsmessagesdemo.service.TestMessage");
-			TimeUnit.MILLISECONDS.sleep(100);
+			send("testEvent", message, "TestMessage");
+			TimeUnit.MILLISECONDS.sleep(500);
 		}
-		log.info(">>> Task #{} compleated <<<", taskNum);
+		log.info("<<<#>>> TASK #{} COMPLETED", taskNum);
 	}
 }
