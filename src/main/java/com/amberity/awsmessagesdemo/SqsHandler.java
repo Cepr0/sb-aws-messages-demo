@@ -23,7 +23,7 @@ public class SqsHandler {
 	@NonNull private final MessageSource source;
 
 	@SqsListener(value = "${sqs.name}", deletionPolicy = ON_SUCCESS)
-	public void receiveMessage(AwsMessage message) throws ClassNotFoundException, IOException, InterruptedException {
+	private void receiveMessage(AwsMessage message) throws ClassNotFoundException, IOException, InterruptedException {
 
 //		log.info("<<<M>>> MESSAGE: {}", message);
 		String subject = message.getSubject();
