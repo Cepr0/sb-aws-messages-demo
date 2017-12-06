@@ -11,8 +11,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.handler.annotation.support.PayloadArgumentResolver;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.Collections;
+import java.util.concurrent.Executor;
 
 @EnableAsync
 @SpringBootApplication
@@ -53,5 +55,16 @@ public class Application {
 		factory.setWaitTimeOut(20);        // 1-20 in sec
 		
 		return factory;
+	}
+	
+	@Bean
+	public Executor asyncExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(4);
+		executor.setMaxPoolSize(8);
+		executor.setQueueCapacity(500);
+		executor.setThreadNamePrefix("TaskRunner-");
+		executor.initialize();
+		return executor;
 	}
 }

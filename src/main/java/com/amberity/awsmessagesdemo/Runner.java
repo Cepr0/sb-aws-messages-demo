@@ -26,8 +26,9 @@ public class Runner implements ApplicationRunner {
 	@Async
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		
+		log.info("STARTING RUNNER...");
 		IntStreamEx.range(3).parallel(new ForkJoinPool(2)).forEach(this::sendTask);
+		log.info("RUNNER STOPPED...");
 	}
 
 	private <T> void send(String topic, T object, String subject) {
@@ -36,13 +37,17 @@ public class Runner implements ApplicationRunner {
 	
 	@SneakyThrows
 	public void sendTask(int taskNum) {
+		
+		log.info("SEND TASK #{} STARTED", taskNum);
 		TimeUnit.SECONDS.sleep(1 + new Random().nextInt(5));
+		
 		for (int i = 1; i <= 10; ++i) {
 			TestMessage message = new TestMessage(Thread.currentThread().getName() +" : Task #" + taskNum, i, i + 0.5);
 			send("testEvent", message, "TestMessage");
 			log.info("<<< SENT: {}", message);
 			TimeUnit.MILLISECONDS.sleep(500);
 		}
+		
 		log.info("SEND TASK #{} COMPLETED", taskNum);
 	}
 }
