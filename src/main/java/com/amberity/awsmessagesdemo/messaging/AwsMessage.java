@@ -1,4 +1,4 @@
-package com.amberity.awsmessagesdemo;
+package com.amberity.awsmessagesdemo.messaging;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
