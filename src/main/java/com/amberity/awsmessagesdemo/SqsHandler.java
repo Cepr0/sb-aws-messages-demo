@@ -36,6 +36,6 @@ public class SqsHandler {
 		
 		TimeUnit.MILLISECONDS.sleep(1000);
 		
-		log.info("<<<@>>> RECEIVED: {}", value);
+		log.info(">>> RECEIVED: {}", value);
 	}
 }

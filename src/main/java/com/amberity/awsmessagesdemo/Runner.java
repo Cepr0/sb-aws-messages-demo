@@ -40,8 +40,9 @@ public class Runner implements ApplicationRunner {
 		for (int i = 1; i <= 10; ++i) {
 			TestMessage message = new TestMessage(Thread.currentThread().getName() +" : Task #" + taskNum, i, i + 0.5);
 			send("testEvent", message, "TestMessage");
+			log.info("<<< SENT: {}", message);
 			TimeUnit.MILLISECONDS.sleep(500);
 		}
-		log.info("<<<#>>> TASK #{} COMPLETED", taskNum);
+		log.info("SEND TASK #{} COMPLETED", taskNum);
 	}
 }
