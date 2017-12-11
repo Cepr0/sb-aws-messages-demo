@@ -12,6 +12,8 @@ import org.springframework.cloud.aws.messaging.core.NotificationMessagingTemplat
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
@@ -42,7 +44,12 @@ public class Runner implements ApplicationRunner {
 		TimeUnit.SECONDS.sleep(1 + new Random().nextInt(5));
 		
 		for (int i = 1; i <= 10; ++i) {
-			TestMessage message = new TestMessage(Thread.currentThread().getName() +" : Task #" + taskNum, i, i + 0.5);
+			TestMessage message = new TestMessage(Thread.currentThread().getName() +" : Task #" + taskNum,
+					i,
+					i + 0.5,
+					LocalDate.now(),
+					LocalDateTime.now()
+			);
 			send("testEvent", message, "TestMessage");
 			log.info("<<< SENT: {}", message);
 			TimeUnit.MILLISECONDS.sleep(500);

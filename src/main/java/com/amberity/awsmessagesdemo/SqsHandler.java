@@ -4,6 +4,7 @@ import com.amberity.awsmessagesdemo.messaging.AbstractSqsHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.aws.messaging.listener.Acknowledgment;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +22,9 @@ public class SqsHandler extends AbstractSqsHandler {
 	}
 	
 	@Override
-	public void processMessage(Object payload) throws Exception {
+	public void processMessage(Object payload, Acknowledgment acknowledgment) throws Exception {
 		TimeUnit.MILLISECONDS.sleep(1000);
 		log.info(">>> RECEIVED: {}", payload);
+		acknowledgment.acknowledge();
 	}
 }
